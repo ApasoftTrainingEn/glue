@@ -1,0 +1,41 @@
+{
+  "name" : "Job_Bookmark",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::044116942026:role/service-role/AWSGlueServiceRole",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-044116942026-us-east-1/scripts/Job_Bookmark.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-044116942026-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "true",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--scriptLocation" : "s3://glue-output-apasoft/Parameters/",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-044116942026-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 480,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "5.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1756857473511\":{\"S3CsvSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://glue-input-apasoft/Bookmarks/input/orders_2025_09_01.csv\"},\"Escaper\":\"\",\"Exclusions\":[],\"Name\":\"Amazon S3\",\"OptimizePerformance\":false,\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"order_id\",\"Type\":\"string\"},{\"Name\":\"order_date\",\"Type\":\"string\"},{\"Name\":\"amount\",\"Type\":\"string\"}]}],\"Paths\":[\"s3://glue-input-apasoft/Bookmarks/input/\"],\"QuoteChar\":\"quote\",\"Recurse\":true,\"Separator\":\"comma\",\"WithHeader\":true}},\"node-1756857488955\":{\"ApplyMapping\":{\"Inputs\":[\"node-1756857473511\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"order_id\"],\"FromType\":\"string\",\"ToKey\":\"order_id\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"order_date\"],\"FromType\":\"string\",\"ToKey\":\"order_date\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"amount\"],\"FromType\":\"string\",\"ToKey\":\"amount\",\"ToType\":\"double\"}],\"Name\":\"Change Schema\"}},\"node-1756857498465\":{\"S3DirectTarget\":{\"AutoDataQuality\":{\"IsEnabled\":false},\"Compression\":\"none\",\"Format\":\"csv\",\"Inputs\":[\"node-1756857488955\"],\"Name\":\"Amazon S3\",\"NumberTargetPartitions\":\"0\",\"PartitionKeys\":[],\"Path\":\"s3://glue-input-apasoft/Bookmarks/output/\",\"SchemaChangePolicy\":{\"EnableUpdateCatalog\":false}}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "glue",
+    "branch" : "main",
+    "folder" : "Job_Bookmark"
+  }
+}
